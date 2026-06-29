@@ -1039,9 +1039,10 @@
         <div class="rail" id="rail">
           <div class="rstep" data-i="0"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span class="lab">Snap &amp; scan device</span></div>
           <div class="rstep" data-i="1"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><span class="lab">Identify make &amp; model</span></div>
-          <div class="rstep" data-i="2"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 12h8M8 16h5"/></svg></span><span class="lab">Build care plan</span></div>
-          <div class="rstep" data-i="3"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></span><span class="lab">Assign &amp; dispatch</span></div>
-          <div class="rstep" data-i="4"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="lab">Save to record · audit-ready</span></div>
+          <div class="rstep" data-i="2"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 8h4M9 12h6M9 16h6"/></svg></span><span class="lab">Fetch manuals &amp; best practices</span></div>
+          <div class="rstep" data-i="3"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 12h8M8 16h5"/></svg></span><span class="lab">Build care plan</span></div>
+          <div class="rstep" data-i="4"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></span><span class="lab">Assign &amp; dispatch</span></div>
+          <div class="rstep" data-i="5"><span class="bub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="lab">Save to record · audit-ready</span></div>
         </div>
 
         <div class="readout" id="readout">
@@ -1351,7 +1352,9 @@
     {pill:'● Scanning', name:'New device', id:'Hold steady…',
      title:'Scanning…', sub:'Point the camera at any equipment', scan:true, fill:false},
     {pill:'✓ Identified', name:'STERIS Amsco V120', id:'Steam Sterilizer · SN 4471',
-     title:'Make &amp; model matched', sub:'Manuals + AAMI ST79 standards pulled from the web', scan:false, fill:true},
+     title:'Make &amp; model matched', sub:'Recognized from the global device database', scan:false, fill:true},
+    {pill:'● Reading', name:'STERIS Amsco V120', id:'Manuals · AAMI ST79',
+     title:'Fetching manuals &amp; best practices', sub:'Pulling OEM manuals and standards from the web', scan:false, fill:true},
     {pill:'✓ Plan ready', name:'STERIS Amsco V120', id:'Care plan · 6 tasks',
      title:'Care plan built', sub:'Maintenance schedule + compliance obligations mapped', scan:false, fill:true, card:'fc1'},
     {pill:'● Dispatched', name:'STERIS Amsco V120', id:'Assigned · Maria R.',
