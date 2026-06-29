@@ -189,6 +189,45 @@
   .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   @media(max-width:900px){.bento{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:560px){.bento{grid-template-columns:1fr}}
+
+  /* PLATFORM CAROUSEL */
+  .pf{position:relative}
+  .pf-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:6px 2px;scrollbar-width:none}
+  .pf-track::-webkit-scrollbar{display:none}
+  .pf-track>.feat{flex:0 0 330px;scroll-snap-align:center;display:flex;flex-direction:column}
+  @media(max-width:560px){.pf-track>.feat{flex:0 0 86%}}
+  .pf.expanded .pf-track{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible;scroll-snap-type:none}
+  @media(max-width:900px){.pf.expanded .pf-track{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.pf.expanded .pf-track{grid-template-columns:1fr}}
+  .pf-ctrls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:24px;flex-wrap:wrap}
+  .pf-nav{display:flex;align-items:center;gap:14px}
+  .pf.expanded .pf-nav{display:none}
+  .pf-arrow{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:.2s}
+  .pf-arrow:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 0 0 3px rgba(114,94,254,.14)}
+  .pf-arrow:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+  .pf-dots{display:flex;gap:7px;align-items:center}
+  .pf-dot{width:7px;height:7px;border-radius:50%;background:rgba(158,176,254,.3);cursor:pointer;transition:.25s;border:0;padding:0}
+  .pf-dot.active{background:var(--purple);width:20px;border-radius:4px}
+
+  /* ANIMATED FEATURE GRAPHICS */
+  .feat .ico{overflow:hidden}
+  .g{width:30px;height:30px;display:block}
+  @keyframes uh-sweep{to{transform:rotate(360deg)}}
+  @keyframes uh-pulse{0%,100%{opacity:.4;transform:scale(.82)}50%{opacity:1;transform:scale(1.12)}}
+  @keyframes uh-ring{0%{transform:scale(.35);opacity:.85}100%{transform:scale(1.55);opacity:0}}
+  @keyframes uh-draw{0%{stroke-dashoffset:var(--l)}55%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+  @keyframes uh-bars{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+  @keyframes uh-blink{0%,100%{opacity:.25}50%{opacity:1}}
+  @keyframes uh-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.4px)}}
+  .g .spin,.g .pulse,.g .ring{transform-box:view-box;transform-origin:20px 20px}
+  .g .spin{animation:uh-sweep 3.2s linear infinite}
+  .g .pulse{animation:uh-pulse 1.8s ease-in-out infinite}
+  .g .ring{animation:uh-ring 2.3s ease-out infinite}
+  .g .draw{stroke-dasharray:var(--l);animation:uh-draw 2.6s ease-in-out infinite}
+  .g .bar{transform-box:fill-box;transform-origin:center bottom;animation:uh-bars 1.9s ease-in-out infinite}
+  .g .float{transform-box:fill-box;transform-origin:center;animation:uh-float 2.3s ease-in-out infinite}
+  .g .blink{animation:uh-blink 1.6s ease-in-out infinite}
+  @media(prefers-reduced-motion:reduce){.g *{animation:none!important}.pf-track{scroll-behavior:auto}}
   .feat{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;transition:.25s}
   .feat:hover{transform:translateY(-4px);border-color:rgba(114,94,254,.45);box-shadow:0 22px 50px -28px rgba(114,94,254,.6)}
   .feat .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;
@@ -1027,17 +1066,26 @@
       <span class="eyebrow">Platform</span>
       <h2>One intelligence layer for everything that keeps your facility alive.</h2>
     </div>
-    <div class="bento">
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><h3>Instant equipment intelligence</h3><p>Snap to identify any device and generate a full care plan in seconds.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C15BE3" stroke-width="1.8"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></div><h3>AI task creation &amp; assignment</h3><p>Natural-language commands, automatic routing, and completion tracking.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="1.8"><path d="M3 17l5-6 4 4 5-7 4 5"/><path d="M3 21h18"/></svg></div><h3>Predictive maintenance</h3><p>Age, usage, and IoT data combine to catch failures before they cost you.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C15BE3" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></div><h3>Technician dispatch</h3><p>Request service, send your preferred tech, and close the loop in one place.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="1.8"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Compliance automation</h3><p>Sterilization, spore samples, physicist reports, and every deadline, tracked for you.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C15BE3" stroke-width="1.8"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></div><h3>Whole-building coverage</h3><p>Medical devices and HVAC, electrical, plumbing, fire, alarms, and panic systems.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="1.8"><path d="M10.3 4.3a2 2 0 0 1 3.4 0l7.3 12.7a2 2 0 0 1-1.7 3H4.7a2 2 0 0 1-1.7-3z"/><path d="M12 9v4"/><circle cx="12" cy="16.5" r=".4" fill="#9EB0FE"/></svg></div><h3>End-of-life replacement alerts</h3><p>AI watches every device's age, usage, and failure signals and warns you the moment one is ripe for replacement — before it fails.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C15BE3" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.4a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.2L22 7H6"/></svg></div><h3>Find &amp; buy replacements</h3><p>Source the exact replacement device, part, or consumable and reorder in a few taps — matched to your equipment automatically.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EB0FE" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/><path d="M8.5 14l2 2 4-4"/></svg></div><h3>Maintenance event management</h3><p>Plan, schedule, and run every facility maintenance event in one calendar — recurring PMs, inspections, and one-off jobs.</p></div>
-      <div class="feat reveal"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C15BE3" stroke-width="1.8"><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 12v4M10 14h4"/></svg></div><h3>Inventory &amp; consumable spend</h3><p>Track stock levels and consumable spend across every site, with reorder thresholds and a clear view of where the money goes.</p></div>
+    <div class="pf" id="pfWrap">
+      <div class="pf-track" id="pfTrack">
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#9EB0FE" stroke-width="1.5" opacity=".45"/><circle class="ring" cx="20" cy="20" r="6" stroke="#C15BE3" stroke-width="1.5"/><line class="spin" x1="20" y1="20" x2="20" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle class="pulse" cx="20" cy="20" r="2.5" fill="#C15BE3"/></svg></div><h3>Instant equipment intelligence</h3><p>Snap to identify any device and generate a full care plan in seconds.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="6" height="6" rx="1.5" stroke="#9EB0FE" stroke-width="1.5"/><line x1="16" y1="11" x2="33" y2="11" stroke="#9EB0FE" stroke-width="1.5" opacity=".4"/><rect x="6" y="17" width="6" height="6" rx="1.5" stroke="#9EB0FE" stroke-width="1.5"/><line x1="16" y1="20" x2="33" y2="20" stroke="#9EB0FE" stroke-width="1.5" opacity=".4"/><rect x="6" y="26" width="6" height="6" rx="1.5" stroke="#9EB0FE" stroke-width="1.5"/><line x1="16" y1="29" x2="33" y2="29" stroke="#9EB0FE" stroke-width="1.5" opacity=".4"/><path class="draw" style="--l:9" d="M7 11l1.6 1.6 2.6-3" stroke="#C15BE3" stroke-width="1.8"/><path class="draw" style="--l:9;animation-delay:.5s" d="M7 20l1.6 1.6 2.6-3" stroke="#C15BE3" stroke-width="1.8"/><path class="draw" style="--l:9;animation-delay:1s" d="M7 29l1.6 1.6 2.6-3" stroke="#C15BE3" stroke-width="1.8"/></svg></div><h3>AI task creation &amp; assignment</h3><p>Natural-language commands, automatic routing, and completion tracking.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="34" x2="35" y2="34" stroke="#9EB0FE" stroke-width="1.4" opacity=".4"/><path class="draw" style="--l:62" d="M5 30 14 22 21 26 34 10" stroke="#fff" stroke-width="2"/><circle class="pulse" cx="34" cy="10" r="3" fill="#C15BE3"/></svg></div><h3>Predictive maintenance</h3><p>Age, usage, and IoT data combine to catch failures before they cost you.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle class="ring" cx="20" cy="20" r="8" stroke="#C15BE3" stroke-width="1.5"/><circle class="ring" cx="20" cy="20" r="8" stroke="#9EB0FE" stroke-width="1.5" style="animation-delay:1.15s"/><path d="M20 7c-3.6 0-6.5 2.9-6.5 6.5C13.5 18 20 27 20 27s6.5-9 6.5-13.5C26.5 9.9 23.6 7 20 7Z" stroke="#fff" stroke-width="2"/><circle cx="20" cy="13.5" r="2.4" fill="#C15BE3"/></svg></div><h3>Technician dispatch</h3><p>Request service, send your preferred tech, and close the loop in one place.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6l11 4v8c0 7-5 11-11 13-6-2-11-6-11-13v-8z" stroke="#9EB0FE" stroke-width="1.7" opacity=".7"/><path class="draw" style="--l:17" d="M14 20l4 4 8-9" stroke="#C15BE3" stroke-width="2.3"/></svg></div><h3>Compliance automation</h3><p>Sterilization, spore samples, physicist reports, and every deadline, tracked for you.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none"><rect class="blink" x="7" y="14" width="6" height="20" rx="1.2" fill="#9EB0FE"/><rect class="blink" x="17" y="9" width="6" height="25" rx="1.2" fill="#C15BE3" style="animation-delay:.4s"/><rect class="blink" x="27" y="18" width="6" height="16" rx="1.2" fill="#9EB0FE" style="animation-delay:.8s"/></svg></div><h3>Whole-building coverage</h3><p>Medical devices and HVAC, electrical, plumbing, fire, alarms, and panic systems.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle class="ring" cx="20" cy="22" r="9" stroke="#C15BE3" stroke-width="1.4"/><path d="M20 8l13 22H7z" stroke="#fff" stroke-width="2"/><line class="blink" x1="20" y1="17" x2="20" y2="23" stroke="#C15BE3" stroke-width="2.2"/><circle class="blink" cx="20" cy="27" r="1.3" fill="#C15BE3" style="animation-delay:.2s"/></svg></div><h3>End-of-life replacement alerts</h3><p>AI watches every device's age, usage, and failure signals and warns you the moment one is ripe for replacement — before it fails.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round"><g class="float"><path d="M6 9h4l3 15h15l3-10H12" stroke="#fff" stroke-width="2"/><circle cx="16" cy="30" r="2.2" fill="#9EB0FE"/><circle cx="27" cy="30" r="2.2" fill="#9EB0FE"/></g><circle class="pulse" cx="25" cy="10" r="2.4" fill="#C15BE3"/></svg></div><h3>Find &amp; buy replacements</h3><p>Source the exact replacement device, part, or consumable and reorder in a few taps — matched to your equipment automatically.</p></div>
+        <div class="feat"><div class="ico"><svg class="g" viewBox="0 0 40 40" fill="none"><line x1="6" y1="33" x2="34" y2="33" stroke="#9EB0FE" stroke-width="1.4" opacity=".4"/><rect class="bar" x="9" y="14" width="5" height="18" rx="1" fill="#9EB0FE"/><rect class="bar" x="17.5" y="14" width="5" height="18" rx="1" fill="#C15BE3" style="animation-delay:.3s"/><rect class="bar" x="26" y="14" width="5" height="18" rx="1" fill="#9EB0FE" style="animation-delay:.6s"/></svg></div><h3>Inventory &amp; consumable spend</h3><p>Track stock levels and consumable spend across every site, with reorder thresholds and a clear view of where the money goes.</p></div>
+      </div>
+      <div class="pf-ctrls">
+        <div class="pf-nav">
+          <button class="pf-arrow" id="pfPrev" aria-label="Previous feature"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <div class="pf-dots" id="pfDots"></div>
+          <button class="pf-arrow" id="pfNext" aria-label="Next feature"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+        <button class="btn btn-ghost" id="pfToggle">View all features</button>
+      </div>
     </div>
   </div>
 </section>
@@ -1196,4 +1244,29 @@
   }
   function advance(){ step=(step+1)%JOURNEY.length; render(step); }
   advance(); setInterval(advance, 2200);
+
+  // ===== PLATFORM CAROUSEL =====
+  (function(){
+    const pf=document.getElementById('pfWrap'); if(!pf) return;
+    const track=document.getElementById('pfTrack');
+    const cards=[...track.querySelectorAll('.feat')];
+    const dotsWrap=document.getElementById('pfDots');
+    const prev=document.getElementById('pfPrev'), next=document.getElementById('pfNext'), toggle=document.getElementById('pfToggle');
+    const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    let idx=0, timer=null;
+    cards.forEach((_,i)=>{const b=document.createElement('button');b.className='pf-dot'+(i?'':' active');b.setAttribute('aria-label','Go to feature '+(i+1));b.addEventListener('click',()=>{go(i);restart();});dotsWrap.appendChild(b);});
+    const dots=[...dotsWrap.children];
+    const step=()=>cards[0].offsetWidth+18;
+    function sync(){dots.forEach((d,i)=>d.classList.toggle('active',i===idx));}
+    function go(i){idx=(i+cards.length)%cards.length;track.scrollTo({left:idx*step()});sync();}
+    function auto(){if(reduce||pf.classList.contains('expanded'))return;timer=setInterval(()=>go(idx+1),4200);}
+    function restart(){clearInterval(timer);auto();}
+    prev.addEventListener('click',()=>{go(idx-1);restart();});
+    next.addEventListener('click',()=>{go(idx+1);restart();});
+    let st;track.addEventListener('scroll',()=>{clearTimeout(st);st=setTimeout(()=>{if(!pf.classList.contains('expanded')){idx=Math.round(track.scrollLeft/step());sync();}},100);});
+    pf.addEventListener('pointerenter',()=>clearInterval(timer));
+    pf.addEventListener('pointerleave',auto);
+    toggle.addEventListener('click',()=>{const ex=pf.classList.toggle('expanded');toggle.textContent=ex?'Show less':'View all features';if(ex){clearInterval(timer);}else{go(0);auto();}});
+    auto();
+  })();
 </script>
