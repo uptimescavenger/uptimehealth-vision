@@ -194,7 +194,7 @@
   .pf{position:relative}
   .pf-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:6px 2px;scrollbar-width:none}
   .pf-track::-webkit-scrollbar{display:none}
-  .pf-track>.feat{flex:0 0 330px;scroll-snap-align:center;display:flex;flex-direction:column}
+  .pf-track>.feat{flex:0 0 330px;scroll-snap-align:start;display:flex;flex-direction:column}
   @media(max-width:560px){.pf-track>.feat{flex:0 0 86%}}
   .pf.expanded .pf-track{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible;scroll-snap-type:none}
   @media(max-width:900px){.pf.expanded .pf-track{grid-template-columns:repeat(2,1fr)}}
@@ -1385,20 +1385,23 @@
     const dotsWrap=document.getElementById('pfDots');
     const prev=document.getElementById('pfPrev'), next=document.getElementById('pfNext'), toggle=document.getElementById('pfToggle');
     const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-    let idx=0, timer=null;
+    const DELAY=5000;
+    let idx=0, timer=null, paused=false, holdSync=0;
     cards.forEach((_,i)=>{const b=document.createElement('button');b.className='pf-dot'+(i?'':' active');b.setAttribute('aria-label','Go to feature '+(i+1));b.addEventListener('click',()=>{go(i);restart();});dotsWrap.appendChild(b);});
     const dots=[...dotsWrap.children];
     const step=()=>cards[0].offsetWidth+18;
     function sync(){dots.forEach((d,i)=>d.classList.toggle('active',i===idx));}
-    function go(i){idx=(i+cards.length)%cards.length;track.scrollTo({left:idx*step()});sync();}
-    function auto(){if(reduce||pf.classList.contains('expanded'))return;timer=setInterval(()=>go(idx+1),4200);}
-    function restart(){clearInterval(timer);auto();}
+    function go(i){idx=(i+cards.length)%cards.length;holdSync=Date.now()+900;track.scrollTo({left:idx*step(),behavior:'smooth'});sync();}
+    function startAuto(){stopAuto();if(reduce||pf.classList.contains('expanded'))return;timer=setInterval(()=>{if(!paused)go(idx+1);},DELAY);}
+    function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
+    function restart(){startAuto();}
     prev.addEventListener('click',()=>{go(idx-1);restart();});
     next.addEventListener('click',()=>{go(idx+1);restart();});
-    let st;track.addEventListener('scroll',()=>{clearTimeout(st);st=setTimeout(()=>{if(!pf.classList.contains('expanded')){idx=Math.round(track.scrollLeft/step());sync();}},100);});
-    pf.addEventListener('pointerenter',()=>clearInterval(timer));
-    pf.addEventListener('pointerleave',auto);
-    toggle.addEventListener('click',()=>{const ex=pf.classList.toggle('expanded');toggle.textContent=ex?'Show less':'View all features';if(ex){clearInterval(timer);}else{go(0);auto();}});
-    auto();
+    // only sync from genuine user scrolls, never from our own smooth-scroll
+    let st;track.addEventListener('scroll',()=>{clearTimeout(st);st=setTimeout(()=>{if(Date.now()<holdSync||pf.classList.contains('expanded'))return;idx=Math.round(track.scrollLeft/step());sync();},120);});
+    pf.addEventListener('pointerenter',()=>{paused=true;});
+    pf.addEventListener('pointerleave',()=>{paused=false;restart();});
+    toggle.addEventListener('click',()=>{const ex=pf.classList.toggle('expanded');toggle.textContent=ex?'Show less':'View all features';if(ex){stopAuto();}else{go(0);startAuto();}});
+    startAuto();
   })();
 </script>
